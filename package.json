@@ -1,0 +1,23 @@
+{
+  "name": "web-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhattrannet91/web-chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nhattrannet91/web-chat/issues"
+  },
+  "homepage": "https://github.com/nhattrannet91/web-chat#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
