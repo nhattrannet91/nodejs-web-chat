@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
 
 io.on("connection", (socket) => {
   socket.emit("message", "Welcome!")
-  socket.on("sendMessage", () => {
-    console.log("Received Message")
+  socket.on("sendMessage", (message) => {
+    io.emit("message", `Receive message: ${message}`)
   })
 })
 

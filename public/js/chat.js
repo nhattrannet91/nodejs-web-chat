@@ -7,5 +7,5 @@ socket.on("message", (message) => {
 })
 
 submitBtn.addEventListener("click", () => {
-    socket.emit("sendMessage")
+    socket.emit("sendMessage", messageTxt.value)
 })
