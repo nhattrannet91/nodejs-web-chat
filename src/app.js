@@ -15,6 +15,9 @@ app.get('/', (req, res) => {
 
 io.on("connection", (socket) => {
   socket.emit("message", "Welcome!")
+  socket.on("sendMessage", () => {
+    console.log("Received Message")
+  })
 })
 
 http.listen(port, () => {
