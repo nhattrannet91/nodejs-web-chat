@@ -1,6 +1,9 @@
-const express = require('express')
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const path = require("path");
-const app = express()
+
 const port = process.env.PORT || 3000
 const publicDirectory = path.join(__dirname, "../public")
 
@@ -10,6 +13,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.listen(port, () => {
+io.on("connection", (socket) => {
+  socket.emit("message", "Welcome!")
+})
+
+http.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
