@@ -18,6 +18,11 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (message) => {
     io.emit("message", `Receive message: ${message}`)
   })
+
+  socket.on("sendLocation", (location, callback) => {
+    socket.broadcast.emit("message", `Someone has joined with us (lat: ${location.latitude}, long: ${location.longitude})`)
+    callback("Location Shared!")
+  });
 })
 
 http.listen(port, () => {
