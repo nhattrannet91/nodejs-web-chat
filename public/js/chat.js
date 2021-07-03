@@ -4,6 +4,7 @@ const socket = io()
 const $messageTxt = document.querySelector("#messageTxt")
 const $submitBtn = document.querySelector("#submitBtn")
 const $messages = document.querySelector("#messages")
+const $sendLocation = document.querySelector("#sendLocationBtn")
 
 // Templates
 const messageTemplate = document.querySelector("#message-template")
@@ -29,17 +30,29 @@ socket.on("location", (message) => {
 })
 
 $submitBtn.addEventListener("click", () => {
-    socket.emit("sendMessage", $messageTxt.value)
+    $submitBtn.disabled = true
+    socket.emit("sendMessage", $messageTxt.value, (error) => {
+        $submitBtn.disabled = false;
+        if (error) {
+            alert(error)
+        }
+    })
 })
 
-document.querySelector("#sendLocationBtn").addEventListener("click", () => {
+$sendLocation.addEventListener("click", () => {
     if (!navigator.geolocation) {
         alert("Geolocation is not available")
     }
 
+    $sendLocation.disabled = true
     navigator.geolocation.getCurrentPosition(position => {
         socket.emit("sendLocation",
             { latitude: position.coords.latitude, longitude: position.coords.longitude },
-            message => console.log(message))
+            error => {
+                $sendLocation.disabled = false
+                if (error) {
+                    alert(error)
+                }
+            })
     });
 })

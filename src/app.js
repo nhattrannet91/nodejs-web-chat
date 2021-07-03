@@ -15,14 +15,15 @@ app.get('/', (req, res) => {
 })
 
 io.on("connection", (socket) => {
-  socket.broadcast.emit("message",  generateMessage(`Someone has joined with us`))
-  socket.on("sendMessage", (message) => {
+  socket.broadcast.emit("message", generateMessage(`Someone has joined with us`))
+  socket.on("sendMessage", (message, callback) => {
     io.emit("message", generateMessage(message))
+    callback()
   })
 
   socket.on("sendLocation", (location, callback) => {
     socket.broadcast.emit("location", generateLocation(location))
-    callback("Location Shared!")
+    callback()
   });
 })
 
