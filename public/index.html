@@ -4,29 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.min.css">
+    <link rel="icon" href="/img/favicon.png">
     <title>Document</title>
 </head>
 
 <body>
-    <h1>Web Chat</h1>
-    <div id="messages">
-
+    <div class="chat">
+        <div class="chat__sidebar"></div>
+        <div class="chat__main">
+            <div id="messages" class="chat_messages">
+            </div>
+            <div class="compose">
+                <form>
+                    <input type="text" name="" id="messageTxt">
+                    <button id="submitBtn">Send</button>
+                </form>
+                <button id="sendLocationBtn">Send Location</button>
+            </div>
+        </div>
     </div>
-    <form>
-        <input type="text" name="" id="messageTxt">
-        <input type="button" value="Send" id="submitBtn">
-    </form>
-    <button id="sendLocationBtn">Send Location</button>
+
 
     <script id="message-template" type="x-tmpl-mustache">
-        <div>
-            <span>{{author}}</span>-<span>{{createdAt}}:</span>
+        <div class="message">
+            <span class="message__name">{{author}}</span><span class="message__meta">{{createdAt}}:</span>
             <p>{{content}}</p>
         </div>
     </script>
     <script id="location-template" type="x-tmpl-mustache">
-        <div>
-            <span>{{author}}</span>-<span>{{createdAt}}:</span>
+        <div class="message">
+            <span class="message__name">{{author}}</span><span class="message__meta">{{createdAt}}:</span>
             <p>
                 <a href="https://www.google.com/maps/search/?api=1&query={{lat}},{{long}}" target="_blank">I'm here</a>
             </p>           
