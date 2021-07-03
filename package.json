@@ -20,6 +20,7 @@
   "homepage": "https://github.com/nhattrannet91/web-chat#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mustache": "^4.2.0",
     "socket.io": "^3.1.0"
   }
 }

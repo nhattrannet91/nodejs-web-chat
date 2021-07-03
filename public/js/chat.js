@@ -3,9 +3,16 @@ const socket = io()
 // Elements
 const $messageTxt = document.querySelector("#messageTxt")
 const $submitBtn = document.querySelector("#submitBtn")
+const $messages = document.querySelector("#messages")
+
+// Templates
+const messageTemplate = document.querySelector("#message-template")
 
 socket.on("message", (message) => {
-    console.log("Server response: ", message)
+    const html = Mustache.render(messageTemplate.innerHTML, {
+        content: message
+    })
+    $messages.insertAdjacentHTML("beforeend", html)
 })
 
 $submitBtn.addEventListener("click", () => {

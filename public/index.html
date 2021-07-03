@@ -6,12 +6,25 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Web Chaaaat</h1>
+    <h1>Web Chat</h1>
+    <div id="messages">
+
+    </div>
     <form>
         <input type="text" name="" id="messageTxt">
         <input type="button" value="Send" id="submitBtn">
     </form>
     <button id="sendLocationBtn">Send Location</button>
+
+    <script id="message-template" type="x-tmpl-mustache">
+        <div>
+            <span>User</span>
+            <span>09:48</span>
+
+            <p>{{content}}</p>
+        </div>
+    </script>
+    <script src="https://unpkg.com/mustache@latest"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/chat.js"></script>
 </body>
