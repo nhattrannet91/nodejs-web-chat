@@ -3,6 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const path = require("path");
+const { generateMessage } = require("./utils/messages")
 
 const port = process.env.PORT || 3000
 const publicDirectory = path.join(__dirname, "../public")
@@ -14,9 +15,9 @@ app.get('/', (req, res) => {
 })
 
 io.on("connection", (socket) => {
-  socket.emit("message", "Welcome!")
+  socket.broadcast.emit("message",  generateMessage(`Someone has joined with us`))
   socket.on("sendMessage", (message) => {
-    io.emit("message", `Receive message: ${message}`)
+    io.emit("message", generateMessage(message))
   })
 
   socket.on("sendLocation", (location, callback) => {
