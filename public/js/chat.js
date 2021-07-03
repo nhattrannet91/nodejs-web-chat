@@ -33,6 +33,7 @@ $submitBtn.addEventListener("click", () => {
     $submitBtn.disabled = true
     socket.emit("sendMessage", $messageTxt.value, (error) => {
         $submitBtn.disabled = false;
+        $messageTxt.value = null
         if (error) {
             alert(error)
         }
