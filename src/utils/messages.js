@@ -1,8 +1,11 @@
 const moment = require("moment")
+const Filter = require('bad-words'),
+	filter = new Filter()
+
 
 generateMessage = (message) => {
 	return {
-		content: message,
+		content: filter.clean(message),
 		createdBy: 'User',
 		createdAt: moment()
 	}

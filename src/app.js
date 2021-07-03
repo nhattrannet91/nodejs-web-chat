@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 })
 
 io.on("connection", (socket) => {
-  socket.broadcast.emit("message", generateMessage(`Someone has joined with us`))
+  socket.broadcast.emit("message", generateMessage(`Someone has joined  ith us`))
   socket.on("sendMessage", (message, callback) => {
     io.emit("message", generateMessage(message))
     callback()

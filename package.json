@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/nhattrannet91/web-chat#readme",
   "dependencies": {
+    "bad-words": "^3.0.4",
     "express": "^4.17.1",
     "moment": "^2.29.1",
     "mustache": "^4.2.0",
