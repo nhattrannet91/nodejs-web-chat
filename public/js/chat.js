@@ -7,11 +7,21 @@ const $messages = document.querySelector("#messages")
 
 // Templates
 const messageTemplate = document.querySelector("#message-template")
+const locationTemplate = document.querySelector("#location-template")
 
 socket.on("message", (message) => {
-    console.log(JSON.stringify(message))
     const html = Mustache.render(messageTemplate.innerHTML, {
         content: message.content,
+        author: message.createdBy,
+        createdAt: moment(message.createdAt).format("HH:mm")
+    })
+    $messages.insertAdjacentHTML("beforeend", html)
+})
+
+socket.on("location", (message) => {
+    const html = Mustache.render(locationTemplate.innerHTML, {
+        lat: message.location.latitude,
+        long: message.location.longitude,
         author: message.createdBy,
         createdAt: moment(message.createdAt).format("HH:mm")
     })

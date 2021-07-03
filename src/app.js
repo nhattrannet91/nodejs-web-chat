@@ -3,7 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const path = require("path");
-const { generateMessage } = require("./utils/messages")
+const { generateMessage, generateLocation } = require("./utils/messages")
 
 const port = process.env.PORT || 3000
 const publicDirectory = path.join(__dirname, "../public")
@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("sendLocation", (location, callback) => {
-    socket.broadcast.emit("message", `Someone has joined with us (lat: ${location.latitude}, long: ${location.longitude})`)
+    socket.broadcast.emit("location", generateLocation(location))
     callback("Location Shared!")
   });
 })

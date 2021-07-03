@@ -8,6 +8,15 @@ generateMessage = (message) => {
 	}
 }
 
+generateLocation = (location) => {
+	return {
+		location,
+		createdBy: 'User',
+		createdAt: moment()
+	}
+}
+
 module.exports = {
-	generateMessage
+	generateMessage,
+	generateLocation
 }
