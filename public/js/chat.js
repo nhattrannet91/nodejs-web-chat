@@ -10,6 +10,16 @@ const $sendLocation = document.querySelector("#sendLocationBtn")
 const messageTemplate = document.querySelector("#message-template")
 const locationTemplate = document.querySelector("#location-template")
 
+errorHandling = (error) => {
+    if(error){
+        alert(error)
+    }
+}
+
+const {username, room} = Qs.parse(location.search, { ignoreQueryPrefix: true })
+
+socket.emit("join", {username, room}, errorHandling)
+
 socket.on("message", (message) => {
     const html = Mustache.render(messageTemplate.innerHTML, {
         content: message.content,
@@ -32,11 +42,9 @@ socket.on("location", (message) => {
 $submitBtn.addEventListener("click", () => {
     $submitBtn.disabled = true
     socket.emit("sendMessage", $messageTxt.value, (error) => {
-        $submitBtn.disabled = false;
+        errorHandling(error)
+        $submitBtn.disabled = false
         $messageTxt.value = null
-        if (error) {
-            alert(error)
-        }
     })
 })
 
@@ -50,10 +58,8 @@ $sendLocation.addEventListener("click", () => {
         socket.emit("sendLocation",
             { latitude: position.coords.latitude, longitude: position.coords.longitude },
             error => {
+                errorHandling(error)
                 $sendLocation.disabled = false
-                if (error) {
-                    alert(error)
-                }
             })
     });
 })
