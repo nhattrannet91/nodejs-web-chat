@@ -28,7 +28,7 @@ const removeUser = (id) => {
   }
 
   return {
-    user: users.splice(userIndex, 1)
+    user: users.splice(userIndex, 1)[0]
   }
 }
 
