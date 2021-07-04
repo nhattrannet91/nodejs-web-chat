@@ -3,18 +3,18 @@ const Filter = require('bad-words'),
 	filter = new Filter()
 
 
-generateMessage = (message) => {
+generateMessage = (message, user) => {
 	return {
 		content: filter.clean(message),
-		createdBy: 'User',
+		createdBy: user || '',
 		createdAt: moment()
 	}
 }
 
-generateLocation = (location) => {
+generateLocation = (location, user) => {
 	return {
 		location,
-		createdBy: 'User',
+		createdBy: user,
 		createdAt: moment()
 	}
 }

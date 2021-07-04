@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
     const user = res.user;
     socket.join(user.room);
     socket.emit("message", generateMessage("Welcome!"))
-    socket.broadcast.to(user.room).emit("message", generateMessage(`${user.username} has joined`))
+    socket.broadcast.to(user.room).emit("message", generateMessage(`${user.username} has joined`, user.username))
     callback()
   })
 
@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
       return callback("User is invalid. Please reconnect")
     }
 
-    io.to(user.room).emit("message", generateMessage(message))
+    io.to(user.room).emit("message", generateMessage(message, user.username))
     callback()
   })
 
@@ -51,14 +51,14 @@ io.on("connection", (socket) => {
       return callback("User is invalid. Please reconnect")
     }
 
-    io.to(user.room).emit("location", generateLocation(location))
+    io.to(user.room).emit("location", generateLocation(location, user.username))
     callback()
   });
 
   socket.on("disconnect", () => {
     const user = removeUser(socket.id).user
     if(user){
-      io.to(user.room).emit("message", generateMessage(`${user.username} has left`))
+      io.to(user.room).emit("message", generateMessage(`${user.username} has left`, user.username))
     }
   });
 })
