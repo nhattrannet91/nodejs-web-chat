@@ -2,9 +2,10 @@ const socket = io()
 
 // Elements
 const $messageTxt = document.querySelector("#messageTxt")
-const $submitBtn = document.querySelector("#submitBtn")
+const $messageForm = document.querySelector("#message-form")
 const $messages = document.querySelector("#messages")
 const $sendLocation = document.querySelector("#sendLocationBtn")
+const $sendMessageBtn = $messageForm.querySelector("button")
 
 // Templates
 const messageTemplate = document.querySelector("#message-template")
@@ -44,11 +45,12 @@ socket.on("location", (message) => {
     $messages.insertAdjacentHTML("beforeend", html)
 })
 
-$submitBtn.addEventListener("click", () => {
-    $submitBtn.disabled = true
+$messageForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+    $sendMessageBtn.disabled = true
     socket.emit("sendMessage", $messageTxt.value, (error) => {
         errorHandling(error)
-        $submitBtn.disabled = false
+        $sendMessageBtn.disabled = false
         $messageTxt.value = null
     })
 })
