@@ -6,10 +6,12 @@ const $messageForm = document.querySelector("#message-form")
 const $messages = document.querySelector("#messages")
 const $sendLocation = document.querySelector("#sendLocationBtn")
 const $sendMessageBtn = $messageForm.querySelector("button")
+const $sidebar = document.querySelector(".chat__sidebar")
 
 // Templates
 const messageTemplate = document.querySelector("#message-template")
 const locationTemplate = document.querySelector("#location-template")
+const sidebarTemplate = document.querySelector("#sidebar-template")
 
 errorHandling = (error) => {
     if(error){
@@ -43,6 +45,11 @@ socket.on("location", (message) => {
         createdAt: moment(message.createdAt).format("HH:mm")
     })
     $messages.insertAdjacentHTML("beforeend", html)
+})
+
+socket.on("roomData", (roomData) => {
+    const html = Mustache.render(sidebarTemplate.innerHTML, roomData)
+    $sidebar.innerHTML = html 
 })
 
 $messageForm.addEventListener("submit", (e) => {

@@ -4,7 +4,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const path = require("path");
 const { generateMessage, generateLocation } = require("./utils/messages")
-const { addUser, getUser, removeUser } = require("./utils/users")
+const { addUser, getUser, removeUser, getUsersInRoom } = require("./utils/users")
 
 const port = process.env.PORT || 3000
 const publicDirectory = path.join(__dirname, "../public")
@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
       room
     })
 
-    if(res.error){
+    if (res.error) {
       return callback(res.error)
     }
 
@@ -32,12 +32,16 @@ io.on("connection", (socket) => {
     socket.join(user.room);
     socket.emit("message", generateMessage("Welcome!", "Admin"))
     socket.broadcast.to(user.room).emit("message", generateMessage(`${user.username} has joined`, "Admin"))
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUsersInRoom(room)
+    })
     callback()
   })
 
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id)
-    if(!user){
+    if (!user) {
       return callback("User is invalid. Please reconnect")
     }
 
@@ -47,7 +51,7 @@ io.on("connection", (socket) => {
 
   socket.on("sendLocation", (location, callback) => {
     const user = getUser(socket.id)
-    if(!user){
+    if (!user) {
       return callback("User is invalid. Please reconnect")
     }
 
@@ -57,8 +61,12 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     const user = removeUser(socket.id).user
-    if(user){
+    if (user) {
       io.to(user.room).emit("message", generateMessage(`${user.username} has left`, "Admin"))
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUsersInRoom(user.room)
+      })
     }
   });
 })
